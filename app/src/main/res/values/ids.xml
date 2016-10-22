@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="view_pager" type="id">view_pager</item>
+    <item name="buttom_bar" type="id">buttom_bar</item>
+</resources>
