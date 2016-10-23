@@ -5,8 +5,8 @@ android {
     buildToolsVersion "24.0.0"
     defaultConfig {
         applicationId "com.palm.palmbus"
-        minSdkVersion 23
-        targetSdkVersion 24
+        minSdkVersion 19
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -26,6 +26,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
+    compile 'com.google.code.gson:gson:2.6.2'
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.0.1'
+    compile 'com.zhy:okhttputils:2.6.2'
 }

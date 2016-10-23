@@ -2,4 +2,5 @@
 <resources>
     <item name="view_pager" type="id">view_pager</item>
     <item name="buttom_bar" type="id">buttom_bar</item>
+    <item name="content" type="id">content</item>
 </resources>

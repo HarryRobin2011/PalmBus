@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="My_Theme_light" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="colorPrimaryDark">@android:color/white</item>
+        <item name="colorAccent">@android:color/holo_red_light</item>
+        <item name="android:navigationBarColor">@android:color/holo_red_light</item>
+        <item name="android:colorForeground">@android:color/background_light</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:statusBarColor">@android:color/holo_red_light</item>
+        <item name="colorPrimary">@android:color/holo_red_light</item>
+        <item name="android:colorBackground">@android:color/white</item>
+    </style>
+
 </resources>
