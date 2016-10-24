@@ -1,7 +1,10 @@
 package com.palm.palmbus.ui;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
+import android.widget.FrameLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -19,8 +22,8 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
     private FragmentTransaction transaction;
     private FragmentManager fm;
 
-    private String[] titles = new String[]{"首页", "换乘", "生活", "我的"};
-    private int[] titleIcons = new int[]{R.mipmap.home, R.mipmap.line, R.mipmap.life, R.mipmap.me};
+    private String[] titles = new String[]{"实时", "换乘","我的"};
+    private int[] titleIcons = new int[]{R.mipmap.home, R.mipmap.line, R.mipmap.me};
 
 
     @Override
@@ -28,28 +31,14 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
         return R.layout.activity_main;
     }
 
-    /**
-     *  bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
-     bottomNavigationBar
-     .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
-     );
-     bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_home_white_24dp, "Home").setActiveColorResource(R.color.orange))
-     .addItem(new BottomNavigationItem(R.mipmap.ic_book_white_24dp, "Books").setActiveColorResource(R.color.teal))
-     .addItem(new BottomNavigationItem(R.mipmap.ic_music_note_white_24dp, "Music").setActiveColorResource(R.color.blue))
-     .addItem(new BottomNavigationItem(R.mipmap.ic_tv_white_24dp, "Movies & TV").setActiveColorResource(R.color.brown))
-     .addItem(new BottomNavigationItem(R.mipmap.ic_videogame_asset_white_24dp, "Games").setActiveColorResource(R.color.grey))
-     .setFirstSelectedPosition(0)
-     .initialise();
-
-     */
     @Override
     protected void initData() {
         buttomBar.setMode(BottomNavigationBar.MODE_FIXED);
         buttomBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
-                );
+        );
         for (int i = 0; i < titles.length; i++) {
             int resId = titleIcons[i];
-            buttomBar.addItem(new BottomNavigationItem(resId,titles[0]));
+            buttomBar.addItem(new BottomNavigationItem(resId, titles[i]));
         }
         buttomBar.setFirstSelectedPosition(0).initialise();
         initFragment();
@@ -58,17 +47,16 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
     private void initFragment() {
         fm = getSupportFragmentManager();
         transaction = fm.beginTransaction();
-        currentFragment = (HomePagerFragment) fm.findFragmentByTag(titles[0]);
         if (currentFragment == null) {
             currentFragment = HomePagerFragment.newInstance();
         }
-        transaction.add(R.id.content, currentFragment, titles[0]).commitAllowingStateLoss();
+        transaction.add(R.id.content, currentFragment, titles[0]).commit();
     }
 
     @Override
     protected void initOperation() {
 
-}
+    }
 
     @Override
     public void onTabSelected(int position) {
@@ -90,17 +78,17 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
                 }
                 break;
         }
-       if(currentFragment.isAdded()){
-           transaction.show(currentFragment).commitAllowingStateLoss();
-       }else{
-           transaction.add(currentFragment,titles[position]).commitAllowingStateLoss();
-       }
+        if (currentFragment.isAdded()) {
+            transaction.show(currentFragment).commitAllowingStateLoss();
+        } else {
+            transaction.add(currentFragment, titles[position]).commitAllowingStateLoss();
+        }
     }
 
     @Override
     public void onTabUnselected(int position) {
         currentFragment = (BaseFragment) fm.findFragmentByTag(titles[position]);
-        if(currentFragment != null){
+        if (currentFragment != null) {
             transaction.hide(currentFragment).commitAllowingStateLoss();
         }
     }

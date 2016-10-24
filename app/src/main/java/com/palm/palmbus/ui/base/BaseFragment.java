@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by Robin on 2016/10/23.
  */
@@ -28,7 +30,8 @@ public abstract class BaseFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(mContext).inflate(initResource(),container);
+        View view = LayoutInflater.from(mContext).inflate(initResource(),null);
+        ButterKnife.bind(this,view);
         initData();
         initOperation();
         return view;

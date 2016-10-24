@@ -3,4 +3,13 @@
     <item name="view_pager" type="id">view_pager</item>
     <item name="buttom_bar" type="id">buttom_bar</item>
     <item name="content" type="id">content</item>
+    <item name="list_view" type="id">list_view</item>
+    <item name="tool_bar" type="id">tool_bar</item>
+    <item name="city_name" type="id">tool_bar</item>
+    <item name="search_edit" type="id">search_edit</item>
+    <item name="weather" type="id">weather</item>
+    <item name="temperature" type="id">temperature</item>
+    <item name="weather_icon" type="id">weather_icon</item>
+    <item name="notice" type="id">notice</item>
+    <item name="collect" type="id">collect</item>
 </resources>
