@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <com.jude.rollviewpager.RollPagerView
         android:id="@id/view_pager"
         android:layout_width="match_parent"
@@ -24,8 +25,9 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/notice"/>
             <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:paddingLeft="10.0dp"
                 android:text="@string/notice"/>
         </LinearLayout>
 
@@ -45,6 +47,7 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:paddingLeft="10.0dp"
                 android:text="@string/collect"/>
         </LinearLayout>
     </LinearLayout>

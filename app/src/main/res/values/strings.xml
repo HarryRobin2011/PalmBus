@@ -2,4 +2,5 @@
     <string name="app_name">PalmBus</string>
     <string name="notice">公告</string>
     <string name="collect">收藏</string>
+    <string name="location">定位</string>
 </resources>

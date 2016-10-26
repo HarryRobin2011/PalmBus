@@ -12,4 +12,7 @@
     <item name="weather_icon" type="id">weather_icon</item>
     <item name="notice" type="id">notice</item>
     <item name="collect" type="id">collect</item>
+    <item name="station" type="id">station</item>
+    <item name="bus" type="id">bus</item>
+    <item name="location" type="id">location</item>
 </resources>

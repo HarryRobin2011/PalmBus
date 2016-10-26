@@ -1,39 +1,51 @@
 package com.palm.palmbus.ui.fragment;
 
 import android.graphics.Color;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
+import com.baidu.mapapi.search.poi.PoiDetailResult;
+import com.baidu.mapapi.search.poi.PoiIndoorResult;
+import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
+import com.baidu.mapapi.search.poi.PoiResult;
+import com.baidu.mapapi.search.poi.PoiSearch;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
+import com.palm.palmbus.MyApplication;
 import com.palm.palmbus.R;
 import com.palm.palmbus.adapter.BannerViewPagerAdapter;
 import com.palm.palmbus.adapter.HomePagerAdapter;
 import com.palm.palmbus.config.ControlUrl;
+import com.palm.palmbus.config.LogUtil;
 import com.palm.palmbus.model.BusListModel;
+import com.palm.palmbus.service.LocationService;
 import com.palm.palmbus.ui.base.BaseFragment;
 import com.palm.palmbus.utils.JSONHelper;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import okhttp3.Call;
 
 /**
  * Created by Robin on 2016/10/23.
  */
 
-public class HomePagerFragment extends BaseFragment {
+public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchResultListener {
     @BindView(R.id.list_view)
     ListView listView;
     private HomePagerAdapter homePagerAdapter;
     private View bannerView;
     private RollPagerView mRollViewPager;
     private BannerViewPagerAdapter bannerViewPagerAdapter;
+    private LocationService locationService;
+    private BdListener mBdLocationListener;
+    private PoiSearch poiSearch;
 
     public static HomePagerFragment newInstance() {
         HomePagerFragment fragment = new HomePagerFragment();
@@ -47,6 +59,12 @@ public class HomePagerFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        locationService = ((MyApplication)getActivity().getApplication()).getmLocationService();
+        mBdLocationListener = new BdListener();
+        // 实例化搜索对象
+        poiSearch = PoiSearch.newInstance();
+        poiSearch.setOnGetPoiSearchResultListener(this);
+
         bannerView = mInflater.inflate(R.layout.home_head_view_layout, null);
         mRollViewPager = (RollPagerView) bannerView.findViewById(R.id.view_pager);
         //设置播放时间间隔
@@ -54,18 +72,7 @@ public class HomePagerFragment extends BaseFragment {
         //设置透明度
         mRollViewPager.setAnimationDurtion(500);
         //设置适配器
-
-
-        //设置指示器（顺序依次）
-        //自定义指示器图片
-        //设置圆点指示器颜色
-        //设置文字指示器
-        //隐藏指示器
-        //mRollViewPager.setHintView(new IconHintView(this, R.drawable.point_focus, R.drawable.point_normal));
         mRollViewPager.setHintView(new ColorPointHintView(mContext, Color.YELLOW, Color.WHITE));
-        //mRollViewPager.setHintView(new TextHintView(this));
-        //mRollViewPager.setHintView(null);
-
     }
 
     @Override
@@ -76,6 +83,10 @@ public class HomePagerFragment extends BaseFragment {
         mRollViewPager.setAdapter(bannerViewPagerAdapter);
         listView.addHeaderView(bannerView);
         listView.setAdapter(null);
+        locationService.registerListener(mBdLocationListener);
+        locationService.start();
+
+
         //  request();
     }
 
@@ -96,5 +107,50 @@ public class HomePagerFragment extends BaseFragment {
             }
         });
     }
+
+    /**
+     * 检索公交站牌
+     */
+    private void searchPoi(double latitude,double longitude){
+        LatLng latLng = new LatLng(latitude,longitude);
+        PoiNearbySearchOption searchOption = new PoiNearbySearchOption();
+        searchOption.keyword("公交站");
+        searchOption.location(latLng);
+        searchOption.radius(1000);
+        poiSearch.searchNearby(searchOption);
+    }
+
+    /**
+     * 定位回掉
+     */
+    private class BdListener implements BDLocationListener{
+
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            searchPoi(bdLocation.getLatitude(),bdLocation.getLongitude());
+            Log.i("HarryRobin","=========="+JSONHelper.toJSONString(bdLocation));
+        }
+    }
+
+    /**
+     * 搜索回掉
+     * @param poiResult
+     */
+    @Override
+    public void onGetPoiResult(PoiResult poiResult) {
+        LogUtil.LogOutPut(JSONHelper.toJSONString(poiResult));
+    }
+
+    @Override
+    public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
+        LogUtil.LogOutPut(JSONHelper.toJSONString(poiDetailResult));
+    }
+
+    @Override
+    public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+        LogUtil.LogOutPut(JSONHelper.toJSONString(poiIndoorResult));
+    }
+
+
 
 }

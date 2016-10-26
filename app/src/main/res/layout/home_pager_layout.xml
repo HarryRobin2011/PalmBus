@@ -3,12 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <android.support.v7.widget.Toolbar >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="?android:toolbarStyle"
         android:background="@android:color/holo_blue_light"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -20,14 +18,16 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingLeft="10.0dp"
+            android:textColor="@android:color/white"
             android:text="滨州" />
 
         <EditText
             android:id="@id/search_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10.0dp"
+            android:layout_margin="15.0dp"
             android:layout_weight="1"
+            android:cursorVisible="false"
             android:background="@drawable/edit_text_radius_bg" />
         <ImageView android:id="@id/weather_icon"
             android:layout_width="wrap_content"
@@ -36,12 +36,13 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10.0dp"
             android:orientation="vertical">
         <TextView android:id="@id/weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
             android:text="多云"
             style="@style/Base.TextAppearance.AppCompat.Body1"/>
             <TextView android:id="@id/temperature"
@@ -49,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="8 ℃"
+                android:textColor="@android:color/white"
                 style="@style/Base.TextAppearance.AppCompat.Body1"/>
         </LinearLayout>
     </LinearLayout>
