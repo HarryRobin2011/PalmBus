@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <com.jude.rollviewpager.RollPagerView
@@ -26,7 +26,7 @@
                 android:src="@mipmap/notice"/>
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
+                style="@style/text_style_3"
                 android:paddingLeft="10.0dp"
                 android:text="@string/notice"/>
         </LinearLayout>
@@ -46,7 +46,7 @@
                 android:src="@mipmap/my_save"/>
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
+                style="@style/text_style_3"
                 android:paddingLeft="10.0dp"
                 android:text="@string/collect"/>
         </LinearLayout>

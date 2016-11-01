@@ -6,17 +6,53 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/line_dark_m</item>
     </style>
 
     <style name="My_Theme_light" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="colorPrimaryDark">@android:color/white</item>
         <item name="colorAccent">@android:color/holo_blue_light</item>
         <item name="android:navigationBarColor">@android:color/holo_red_light</item>
-        <item name="android:colorForeground">@android:color/background_light</item>
+        <item name="android:colorForeground">@color/line_dark</item>
         <item name="android:textColorPrimary">@android:color/primary_text_light</item>
         <item name="android:statusBarColor">@android:color/holo_red_light</item>
         <item name="colorPrimary">@android:color/holo_blue_light</item>
         <item name="android:colorBackground">@android:color/white</item>
     </style>
+    <style name="text_tag_style">
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/text_size_3</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">@dimen/line_height_10</item>
+    </style>
+
+    <style name="text_style_1">
+        <item name="android:textSize">@dimen/text_size_4</item>
+        <item name="android:textColor">@color/text_black_light</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">10.0dp</item>
+    </style>
+
+    <style name="text_style_2">
+        <item name="android:textSize">@dimen/text_size_2</item>
+        <item name="android:textColor">@color/text_black_light</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="text_style_3">
+        <item name="android:textSize">@dimen/text_size_4</item>
+        <item name="android:textColor">@color/text_black_light</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+
+
+    <style name="text_style_4">
+        <item name="android:textSize">@dimen/text_size_5</item>
+        <item name="android:textColor">@color/text_gray_dark</item>
+        <item name="android:gravity">center_vertical</item>
+
+    </style>
+
 
 </resources>

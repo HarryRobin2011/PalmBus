@@ -2,43 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:paddingTop="10.0dp"
+        android:paddingBottom="10.0dp"
         android:orientation="horizontal">
-          <Button
-              android:id="@id/location"
-              android:layout_width="@dimen/height_60"
-              android:layout_height="@dimen/height_60"
-              android:background="@android:color/white"
-              android:gravity="center"
-              android:layout_marginTop="5.0dp"
-              android:drawableTop="@mipmap/dingwei"
-              android:textColor="@android:color/holo_green_light"
-              android:text="@string/location"/>
 
+        <Button
+            android:id="@id/location"
+            android:layout_width="@dimen/height_60"
+            android:layout_height="@dimen/height_60"
+            android:background="@android:color/white"
+            android:drawableTop="@mipmap/dingwei"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:text="@string/location"
+            android:textColor="@android:color/holo_green_light" />
+    <View android:layout_width="1.0dp"
+        android:layout_height="match_parent"
+        android:background="@color/line_dark"/>
 
-        <LinearLayout android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10.0dp"
             android:orientation="vertical">
+
             <TextView
                 android:id="@id/station"
-                style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="match_parent"
-                android:text="滨州日报社"
+                android:layout_height="@dimen/height_30"
                 android:gravity="center_vertical"
-                android:layout_height="@dimen/height_60" />
-            <TextView android:id="@id/bus"
+                style="@style/text_style_3"
+                android:text="滨州日报社" />
+
+            <TextView
+                android:id="@id/bus"
+                style="@style/text_style_4"
+                android:textColor="@color/text_gray_dark_l"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Base.TextAppearance.AppCompat.Body1"
-                android:text="途径线路："/>
+                android:layout_height="@dimen/height_20"/>
         </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
 </LinearLayout>

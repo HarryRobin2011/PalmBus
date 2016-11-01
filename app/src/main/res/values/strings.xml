@@ -3,4 +3,6 @@
     <string name="notice">公告</string>
     <string name="collect">收藏</string>
     <string name="location">定位</string>
+    <string name="station_current">当前站：</string>
+    <string name="online_num">在线车辆：</string>
 </resources>

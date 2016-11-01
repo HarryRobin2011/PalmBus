@@ -15,4 +15,6 @@
     <item name="station" type="id">station</item>
     <item name="bus" type="id">bus</item>
     <item name="location" type="id">location</item>
+    <item name="title_layout" type="id">title_layout</item>
+    <item name="station_current" type="id">station_current</item>
 </resources>

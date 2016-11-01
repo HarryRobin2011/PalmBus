@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.palm.palmbus.R;
 import com.palm.palmbus.adapter.base.BaseMyAdapter;
 
@@ -19,7 +20,8 @@ import butterknife.ButterKnife;
  */
 
 public class HomePagerAdapter extends BaseMyAdapter {
-    private ViewHolder viewHolder;
+    private StationHolder stationHolder;
+
     public HomePagerAdapter(Context context, List dataList) {
         super(context, dataList);
     }
@@ -32,17 +34,20 @@ public class HomePagerAdapter extends BaseMyAdapter {
 
     @Override
     public BusinessHolder createCellHolder(View cellView) {
-        viewHolder = new ViewHolder(cellView);
-        return viewHolder;
+        stationHolder = new StationHolder(cellView);
+        return stationHolder;
     }
 
     @Override
     protected View buildData(int position, View cellView, BusinessHolder cellHolder) {
-
+        StationHolder holder = (StationHolder) cellHolder;
+        PoiInfo poiInfo = (PoiInfo) dataList.get(position);
+        holder.station.setText(poiInfo.name);
+        holder.bus.setText("途径线路："+poiInfo.address);
         return null;
     }
 
-    public class ViewHolder extends BusinessHolder{
+    public class StationHolder extends BusinessHolder {
         @BindView(R.id.location)
         Button location;
         @BindView(R.id.station)
@@ -50,7 +55,7 @@ public class HomePagerAdapter extends BaseMyAdapter {
         @BindView(R.id.bus)
         TextView bus;
 
-        ViewHolder(View view) {
+        StationHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }

@@ -29,6 +29,8 @@ import com.palm.palmbus.utils.JSONHelper;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.util.List;
+
 import butterknife.BindView;
 import okhttp3.Call;
 
@@ -46,6 +48,7 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
     private LocationService locationService;
     private BdListener mBdLocationListener;
     private PoiSearch poiSearch;
+    private HomePagerAdapter busStationListAdapter;
 
     public static HomePagerFragment newInstance() {
         HomePagerFragment fragment = new HomePagerFragment();
@@ -139,6 +142,7 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
     @Override
     public void onGetPoiResult(PoiResult poiResult) {
         LogUtil.LogOutPut(JSONHelper.toJSONString(poiResult));
+        setAdapter(poiResult.getAllPoi());
     }
 
     @Override
@@ -149,6 +153,13 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
     @Override
     public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
         LogUtil.LogOutPut(JSONHelper.toJSONString(poiIndoorResult));
+    }
+
+    private void setAdapter(List dataList){
+        if(busStationListAdapter == null){
+            busStationListAdapter = new HomePagerAdapter(getContext(),dataList);
+        }
+        listView.setAdapter(busStationListAdapter);
     }
 
 

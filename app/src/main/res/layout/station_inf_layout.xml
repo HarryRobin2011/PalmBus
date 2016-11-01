@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/time_text"
+               style="@style/text_style_4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_20"
+                android:paddingLeft="10.0dp"
+                android:text="首末班：5:80-12" />
+
+            <TextView
+                android:id="@+id/all_station"
+                style="@style/text_style_4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_20"
+                android:paddingLeft="10.0dp"
+                android:text="首末班：" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.0dp"
+                android:background="@color/line_dark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_40"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_style_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10.0dp"
+                    android:text="@string/station_current" />
+
+                <TextView
+                    android:id="@id/station_current"
+                    style="@style/text_style_3"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    style="@style/text_style_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10.0dp"
+                    android:text="@string/online_num"/>
+
+                <TextView
+                    android:id="@id/station_current"
+                    style="@style/text_style_3"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+     <com.palm.palmbus.widget.MyGridView android:id="@+id/grid_view"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/height_60"
+         android:layout_marginTop="@dimen/row_height"
+         android:numColumns="3"/>
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/row_height"
+            android:background="@android:color/white"
+            android:layout_weight="1">
+            <ListView android:id="@+id/list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:cacheColorHint="@android:color/white"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

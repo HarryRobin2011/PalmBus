@@ -31,7 +31,8 @@
         android:supportsRtl="true"
         android:name=".MyApplication"
         android:theme="@style/My_Theme_light">
-        <activity android:name=".ui.MainActivity" android:screenOrientation="portrait">
+        <activity android:name=".ui.MainActivity" android:screenOrientation="portrait"
+            android:launchMode="singleTask" android:windowSoftInputMode="adjustNothing|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

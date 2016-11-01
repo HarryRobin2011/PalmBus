@@ -44,6 +44,7 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
 
     @Override
     protected void initData() {
+        getPersimmions();
         buttomBar.setMode(BottomNavigationBar.MODE_FIXED);
         buttomBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
         );
@@ -66,7 +67,6 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
 
     @Override
     protected void initOperation() {
-
     }
 
     @Override
