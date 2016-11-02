@@ -2,9 +2,10 @@ package com.palm.palmbus.bean;
 
 /**
  * Created by Robin on 2016/10/23.
+ * 线路站点
  */
 
-public class BusBean extends BaseEntrty {
+public class StationBean extends BaseEntrty {
     private String beginStation;
     private String beginTime;
     private String busCode;

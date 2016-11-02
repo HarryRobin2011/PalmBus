@@ -881,4 +881,5 @@
     <dimen name="video_comment_width">25dp</dimen>
     <dimen name="video_comment_height">25dp</dimen>
     <dimen name="row_height" >20.0dp</dimen>
+    <dimen name="height_10">10.0dp</dimen>
 </resources>

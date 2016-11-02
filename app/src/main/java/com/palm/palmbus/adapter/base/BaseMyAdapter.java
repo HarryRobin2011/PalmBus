@@ -13,12 +13,13 @@ import java.util.List;
 /**
  * Created by Robin on 2015/1/28.
  */
-public abstract class BaseMyAdapter extends BaseAdapter {
+public abstract class BaseMyAdapter extends BaseAdapter implements View.OnClickListener{
     public List dataList;
     public Context mContext;
     public LayoutInflater mInflater;
     public HashMap<Integer,View> dataMap;
     public ViewType viewType = ViewType.SINGLE;
+    private OnChildClickListener onChildClickListener;
 
 
     public BaseMyAdapter(Context context, List dataList){
@@ -26,6 +27,10 @@ public abstract class BaseMyAdapter extends BaseAdapter {
         this.mContext = context;
         dataMap = new HashMap<Integer, View>();
         mInflater = LayoutInflater.from(mContext);
+    }
+
+    public void setOnChildClickListener(OnChildClickListener onChildClickListener) {
+        this.onChildClickListener = onChildClickListener;
     }
 
     public void setMoreDataList(List dataList) {
@@ -55,9 +60,16 @@ public abstract class BaseMyAdapter extends BaseAdapter {
     }
 
     public interface OnChildClickListener{
-        public void OnChildClick(View view);
+         void OnChildClick(View view);
     }
 
+    @Override
+    public void onClick(View v) {
+        if(onChildClickListener == null){
+            throw new RuntimeException("onChildClickListener is null");
+        }
+        onChildClickListener.OnChildClick(v);
+    }
 
     @Override
     public int getCount() {
@@ -101,4 +113,5 @@ public abstract class BaseMyAdapter extends BaseAdapter {
         SINGLE,
         MORE
     }
+
 }

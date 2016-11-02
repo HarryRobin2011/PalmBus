@@ -1,9 +1,9 @@
 package com.palm.palmbus.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.mapapi.search.core.PoiInfo;
@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 
 public class HomePagerAdapter extends BaseMyAdapter {
     private StationHolder stationHolder;
+    private OnChildClickListener onChildClickListener;
 
     public HomePagerAdapter(Context context, List dataList) {
         super(context, dataList);
@@ -44,6 +45,8 @@ public class HomePagerAdapter extends BaseMyAdapter {
         PoiInfo poiInfo = (PoiInfo) dataList.get(position);
         holder.station.setText(poiInfo.name);
         holder.bus.setText("途径线路："+poiInfo.address);
+        holder.homePageItemLayout.setTag(position);
+        holder.homePageItemLayout.setOnClickListener(this);
         return null;
     }
 
@@ -54,6 +57,8 @@ public class HomePagerAdapter extends BaseMyAdapter {
         TextView station;
         @BindView(R.id.bus)
         TextView bus;
+        @BindView(R.id.home_page_item_layout)
+        LinearLayout homePageItemLayout;
 
         StationHolder(View view) {
             ButterKnife.bind(this, view);

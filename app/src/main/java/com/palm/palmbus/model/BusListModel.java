@@ -1,6 +1,6 @@
 package com.palm.palmbus.model;
 
-import com.palm.palmbus.bean.BusBean;
+import com.palm.palmbus.bean.StationBean;
 import com.palm.palmbus.model.base.BaseModel;
 
 import java.util.List;
@@ -10,13 +10,13 @@ import java.util.List;
  */
 
 public class BusListModel extends BaseModel{
-    private List<BusBean> lineList;
+    private List<StationBean> lineList;
 
-    public List<BusBean> getLineList() {
+    public List<StationBean> getLineList() {
         return lineList;
     }
 
-    public void setLineList(List<BusBean> lineList) {
+    public void setLineList(List<StationBean> lineList) {
         this.lineList = lineList;
     }
 }
