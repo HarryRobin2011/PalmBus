@@ -176,7 +176,7 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
         }
     }
 
-    private void requestBusLine(String line, ){
+    private void requestBusLine(String line ){
         if(stationList == null){
             stationList = new LinkedList();
         }
@@ -192,7 +192,6 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
                 stationList.add(infoBean);
                 if(stationList.size() == 3){
                     HomeListBean homeListBean = new HomeListBean();
-                    homeListBean.setStationInfo();
                 }
             }
         });
