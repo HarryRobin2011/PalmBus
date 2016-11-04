@@ -35,8 +35,7 @@ public class BaseMyFiterAdapter<T> extends BaseMyAdapter implements Filterable {
     }
 
     @Override
-    protected View buildData(int position, View cellView, BusinessHolder cellHolder) {
-        return null;
+    protected void buildData(int position, View cellView, BusinessHolder cellHolder) {
     }
 
     @Override

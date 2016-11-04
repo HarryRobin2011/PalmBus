@@ -53,7 +53,7 @@ public abstract class BaseMyAdapter extends BaseAdapter implements View.OnClickL
 
     protected abstract View createCellView();
     public abstract BusinessHolder createCellHolder(View cellView);
-    protected abstract View buildData(int position, View cellView, BusinessHolder cellHolder);
+    protected abstract void buildData(int position, View cellView, BusinessHolder cellHolder);
 
     protected View createMoreCellView(int position){
         return null;

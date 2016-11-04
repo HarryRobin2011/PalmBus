@@ -9,15 +9,15 @@ import java.util.List;
  */
 
 public class HomeListBean extends BaseEntrty{
-    private List<LineInfoBean> lineInfoBeen;// 站点包含的线路
+    private List<HomeLineInfoBean> homeLineInfoBeanList;// 站点包含的线路
     private PoiInfo stationInfo;// 站点信息
 
-    public List<LineInfoBean> getLineInfoBeen() {
-        return lineInfoBeen;
+    public List<HomeLineInfoBean> getHomeLineInfoBeanList() {
+        return homeLineInfoBeanList;
     }
 
-    public void setLineInfoBeen(List<LineInfoBean> lineInfoBeen) {
-        this.lineInfoBeen = lineInfoBeen;
+    public void setHomeLineInfoBeanList(List<HomeLineInfoBean> homeLineInfoBeanList) {
+        this.homeLineInfoBeanList = homeLineInfoBeanList;
     }
 
     public PoiInfo getStationInfo() {

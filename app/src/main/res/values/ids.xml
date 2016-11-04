@@ -17,4 +17,8 @@
     <item name="location" type="id">location</item>
     <item name="title_layout" type="id">title_layout</item>
     <item name="station_current" type="id">station_current</item>
+    <item name="bus_one" type="id">bus_one</item>
+    <item name="change_direction" type="id">change_direction</item>
+    <item name="xinhao" type="id">xinhao</item>
+    <item name="bus_other" type="id">bus_other</item>
 </resources>

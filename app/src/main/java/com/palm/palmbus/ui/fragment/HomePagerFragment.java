@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.baidu.location.BDLocation;
@@ -101,6 +100,7 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
         listView.setAdapter(null);
         locationService.registerListener(mBdLocationListener);
         locationService.start();
+        requestBusLine("101");
         //  request();
     }
 
@@ -180,7 +180,7 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
         if(stationList == null){
             stationList = new LinkedList();
         }
-        OkHttpUtils.post().url(ControlUrl.PALM_GET_LINE_STATION).addParams(ParamsKey.LINE_CODE,line).build().execute(new StringCallback() {
+        OkHttpUtils.post().url(ControlUrl.PALM_GET_LINE_STATION).addParams(ParamsKey.LINE_CODE,line).addParams("sxx","0").build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 LogUtil.logOutPut(e.getMessage());
@@ -207,7 +207,6 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
         LogUtil.logOutPut(JSONHelper.toJSONString(poiResult));
         PoiInfo poiInfo = poiResult.getAllPoi().get(0);
         String lineCode = poiInfo.address.split(";")[0];
-        requestBusLine(lineCode.replace("路",""),poiInfo.name);
         //searchDetailPoi(poiResult.getAllPoi().get(0).uid);
         //setAdapter(poiResult.getAllPoi());
     }
