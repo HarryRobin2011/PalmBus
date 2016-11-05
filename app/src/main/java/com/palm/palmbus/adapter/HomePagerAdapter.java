@@ -54,19 +54,19 @@ public class HomePagerAdapter extends BaseMyAdapter {
         holder.homePageItemLayout.setTag(position);
         holder.homePageItemLayout.setOnClickListener(this);
         if(position == 0){
-            for (HomeLineInfoBean homeLineInfoBean:homeListBean.getHomeLineInfoBeanList()){
-                LineInfoBean lineInfoBean = homeLineInfoBean.getInfoBean();
-                View view = LayoutInflater.from(mContext).inflate(R.layout.bus_line_item_layout,null);
-                TextView busLine = (TextView) view.findViewById(R.id.bus_line);
-                TextView direction = (TextView) view.findViewById(R.id.direction);
-                TextView stationNext = (TextView) view.findViewById(R.id.station_next);
-                TextView busOne = (TextView) view.findViewById(R.id.bus_one);
-                TextView busOther = (TextView) view.findViewById(R.id.bus_other);
-                ImageView change = (ImageView) view.findViewById(R.id.change_direction);
-                busLine.setText(lineInfoBean.getLineList().get(0).getLineName());
-                direction.setText(lineInfoBean.getLineList().get(0).getEndStation());
-                holder.content.addView(view);
-            }
+//            for (HomeLineInfoBean homeLineInfoBean:homeListBean.getHomeLineInfoBeanList()){
+//                LineInfoBean lineInfoBean = homeLineInfoBean.getInfoBean();
+//                View view = LayoutInflater.from(mContext).inflate(R.layout.bus_line_item_layout,null);
+//                TextView busLine = (TextView) view.findViewById(R.id.bus_line);
+//                TextView direction = (TextView) view.findViewById(R.id.direction);
+//                TextView stationNext = (TextView) view.findViewById(R.id.station_next);
+//                TextView busOne = (TextView) view.findViewById(R.id.bus_one);
+//                TextView busOther = (TextView) view.findViewById(R.id.bus_other);
+//                ImageView change = (ImageView) view.findViewById(R.id.change_direction);
+//                busLine.setText(lineInfoBean.getLineList().get(0).getLineName());
+//                direction.setText(lineInfoBean.getLineList().get(0).getEndStation());
+//                holder.content.addView(view);
+//            }
         }
     }
 

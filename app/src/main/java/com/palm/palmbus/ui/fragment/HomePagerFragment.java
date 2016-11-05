@@ -2,6 +2,7 @@ package com.palm.palmbus.ui.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -38,13 +39,16 @@ import com.palm.palmbus.ui.base.BaseFragment;
 import com.palm.palmbus.ui.base.BasePalmActivity;
 import com.palm.palmbus.utils.JSONHelper;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
 import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Robin on 2016/10/23.
@@ -100,23 +104,9 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
         listView.setAdapter(null);
         locationService.registerListener(mBdLocationListener);
         locationService.start();
-        requestBusLine("101");
         //  request();
     }
 
-    private void request() {
-        OkHttpUtils.get().url(ControlUrl.PALM_GET_BUS_LIST).build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                BusListModel listModel = JSONHelper.fromJSONObject(response, BusListModel.class);
-            }
-        });
-    }
 
     /**
      * 检索公交站牌
@@ -176,25 +166,88 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
         }
     }
 
-    private void requestBusLine(String line ){
-        if(stationList == null){
-            stationList = new LinkedList();
-        }
-        OkHttpUtils.post().url(ControlUrl.PALM_GET_LINE_STATION).addParams(ParamsKey.LINE_CODE,line).addParams("sxx","0").build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                LogUtil.logOutPut(e.getMessage());
-            }
+    /**
+     * 组装列表数据
+     */
+    private List<HomeListBean> packageData(List<PoiInfo> poiInfoList){
+        List<HomeListBean> homeListBeanList = new LinkedList<>();
+       for (int position = 0; position < poiInfoList.size();position++){
+           HomeListBean listBean = new HomeListBean();
+           listBean.setStationInfo(poiInfoList.get(position));
+           if(position == 0){
+               int lineNum;
+               String[] lineName = poiInfoList.get(position).address.split(";");
+               if(stationList == null){
+                   stationList = new LinkedList();
+               }else{
+                   stationList.clear();
+               }
 
-            @Override
-            public void onResponse(String response, int id) {
-                LineInfoBean infoBean = JSONHelper.fromJSONObject(response,LineInfoBean.class);
-                stationList.add(infoBean);
-                if(stationList.size() == 3){
-                    HomeListBean homeListBean = new HomeListBean();
+               if(lineName.length > 3){
+                   lineNum = 3;
+               }else{
+                   lineNum = lineName.length;
+               }
+               for (int i = 0;i<lineNum;i++){
+                   requestBusLine(lineName[i].replace("路",""));
+               }
+               listBean.setHomeLineInfoBeanList(stationList);
+
+           }
+           homeListBeanList.add(listBean);
+       }
+        return homeListBeanList;
+    }
+
+
+    /**
+     * 请求线路详情
+     * @param line
+     */
+    private void requestBusLine(String line){
+       new MyTask(line).execute();
+    }
+
+    private class MyTask extends AsyncTask<Void,Void,Response>{
+        private String line;
+
+        public MyTask(String line) {
+            this.line = line;
+        }
+
+        @Override
+        protected Response doInBackground(Void... params) {
+            OkHttpUtils.post().url(ControlUrl.PALM_GET_LINE_STATION).addParams(ParamsKey.LINE_CODE,line).build().execute(new Callback() {
+                @Override
+                public Object parseNetworkResponse(Response response, int id) throws Exception {
+                    return null;
                 }
+
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public void onResponse(Object response, int id) {
+                    Log.i("HarryRobin",response.toString());
+                }
+            });
+            Response response = null;
+
+            try {
+                 response = OkHttpUtils.post().url(ControlUrl.PALM_GET_LINE_STATION).addParams(ParamsKey.LINE_CODE,line).build().execute();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(Response response) {
+            super.onPostExecute(response);
+            Log.i("HarryRobin",response.body().toString());
+        }
     }
 
 
@@ -205,10 +258,7 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
     @Override
     public void onGetPoiResult(PoiResult poiResult) {
         LogUtil.logOutPut(JSONHelper.toJSONString(poiResult));
-        PoiInfo poiInfo = poiResult.getAllPoi().get(0);
-        String lineCode = poiInfo.address.split(";")[0];
-        //searchDetailPoi(poiResult.getAllPoi().get(0).uid);
-        //setAdapter(poiResult.getAllPoi());
+        packageData(poiResult.getAllPoi());
     }
 
     @Override
