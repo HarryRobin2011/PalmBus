@@ -6,4 +6,5 @@
     <string name="station_current">当前站：</string>
     <string name="online_num">在线车辆：</string>
     <string name="location_error">定位失败</string>
+    <string name="current_no_station">定位失败，请刷新重试~</string>
 </resources>

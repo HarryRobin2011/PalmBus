@@ -14,14 +14,15 @@ package com.palm.palmbus.bean;
  */
 public class BusInfoBean extends BaseEntrty{
     private String Speed;
-    private String busCode;
+    private int busCode;
     private String cph;
-    private String isTravel;
+    private int isTravel;
     private String lat;
     private int lineCode;
     private String lon;
     private int passStation;
     private int sxx;
+
 
     public String getSpeed() {
         return Speed;
@@ -31,11 +32,11 @@ public class BusInfoBean extends BaseEntrty{
         Speed = speed;
     }
 
-    public String getBusCode() {
+    public int getBusCode() {
         return busCode;
     }
 
-    public void setBusCode(String busCode) {
+    public void setBusCode(int busCode) {
         this.busCode = busCode;
     }
 
@@ -47,11 +48,11 @@ public class BusInfoBean extends BaseEntrty{
         this.cph = cph;
     }
 
-    public String getIsTravel() {
+    public int getIsTravel() {
         return isTravel;
     }
 
-    public void setIsTravel(String isTravel) {
+    public void setIsTravel(int isTravel) {
         this.isTravel = isTravel;
     }
 

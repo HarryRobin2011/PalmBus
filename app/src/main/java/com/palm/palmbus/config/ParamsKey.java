@@ -6,4 +6,7 @@ package com.palm.palmbus.config;
 public class ParamsKey {
     public static final String LINE_CODE = "lineCode";
     public static final String BEGIN_STATION = "beginStation";
+    public static final String IMEI = "IMEI";
+
+    public static final String SXX = "sxx";
 }
