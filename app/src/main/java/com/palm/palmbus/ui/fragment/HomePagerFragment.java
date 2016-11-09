@@ -59,7 +59,7 @@ import okhttp3.Response;
  * Created by Robin on 2016/10/23.
  */
 
-public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchResultListener, BaseMyAdapter.OnChildClickListener {
+public class HomePagerFragment extends BaseFragment implements  BaseMyAdapter.OnChildClickListener {
     @BindView(R.id.list_view)
     ListView listView;
     private View bannerView;
@@ -99,7 +99,6 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
         mBdLocationListener = new BdListener();
         // 实例化搜索对象
         poiSearch = PoiSearch.newInstance();
-        poiSearch.setOnGetPoiSearchResultListener(this);
 
         bannerView = mInflater.inflate(R.layout.home_head_view_layout, null);
         mRollViewPager = (RollPagerView) bannerView.findViewById(R.id.view_pager);
@@ -134,6 +133,23 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
         searchOption.keyword("公交站");
         searchOption.location(latLng);
         searchOption.radius(1000);
+        poiSearch.setOnGetPoiSearchResultListener(new LocationOnGetPoiSearchResultListener());
+        poiSearch.searchNearby(searchOption);
+    }
+
+    /**
+     * 搜索公交车信息
+     * @param latitude
+     * @param longitude
+     * @param currentLine
+     */
+    private void searchPoiForBus(double latitude, double longitude,String currentLine){
+        LatLng latLng = new LatLng(latitude, longitude);
+        PoiNearbySearchOption searchOption = new PoiNearbySearchOption();
+        searchOption.keyword(currentLine);
+        searchOption.location(latLng);
+        searchOption.radius(1000);
+        poiSearch.setOnGetPoiSearchResultListener(new BusInfoOnGetPoiSearchResultListener());
         poiSearch.searchNearby(searchOption);
     }
 
@@ -187,6 +203,7 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
     /**
      * 组装列表数据
      */
+    @Deprecated
     private List<HomeListBean> packageData(List<PoiInfo> poiInfoList) throws IOException {
         if (poiInfoList == null||poiInfoList.size() ==0){
             Message msg = Message.obtain();
@@ -261,27 +278,56 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
         }
     }
 
+    private class LocationOnGetPoiSearchResultListener implements OnGetPoiSearchResultListener{
+
+        /**
+         * 搜索回掉
+         *
+         * @param poiResult
+         */
+        @Override
+        public void onGetPoiResult(PoiResult poiResult) {
+            LogUtil.logOutPut(JSONHelper.toJSONString(poiResult));
+          //  new MyTask(poiResult.getAllPoi()).execute();
+            if(poiResult.getAllPoi() != null && poiResult.getAllPoi().size() > 0){
+
+            }
+        }
+
+        @Override
+        public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
+            LogUtil.logOutPut(JSONHelper.toJSONString(poiDetailResult));
+        }
+
+        @Override
+        public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+            LogUtil.logOutPut(JSONHelper.toJSONString(poiIndoorResult));
+        }
+    }
 
     /**
-     * 搜索回掉
-     *
-     * @param poiResult
+     * 搜索公交车详情
      */
-    @Override
-    public void onGetPoiResult(PoiResult poiResult) {
-        LogUtil.logOutPut(JSONHelper.toJSONString(poiResult));
-        new MyTask(poiResult.getAllPoi()).execute();
+    private class BusInfoOnGetPoiSearchResultListener implements OnGetPoiSearchResultListener{
+
+        @Override
+        public void onGetPoiResult(PoiResult poiResult) {
+
+        }
+
+        @Override
+        public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
+
+        }
+
+        @Override
+        public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+
+        }
     }
 
-    @Override
-    public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
-        LogUtil.logOutPut(JSONHelper.toJSONString(poiDetailResult));
-    }
 
-    @Override
-    public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
-        LogUtil.logOutPut(JSONHelper.toJSONString(poiIndoorResult));
-    }
+
 
     private void setAdapter(List dataList) {
         if (busStationListAdapter == null) {
@@ -291,5 +337,9 @@ public class HomePagerFragment extends BaseFragment implements OnGetPoiSearchRes
         listView.setAdapter(busStationListAdapter);
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        locationService.stop();
+    }
 }

@@ -9,32 +9,8 @@
         android:layout_height="@dimen/height_80"
         android:orientation="horizontal">
         <RelativeLayout android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:id="@+id/bus_line_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/height_40">
-
-                <TextView
-                    android:id="@+id/bus_line"
-                    style="@style/text_style_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/height_40"
-                    android:paddingLeft="10.0dp"
-                    android:paddingRight="10.0dp"
-                    android:text="25路" />
-
-                <TextView
-                    android:id="@+id/direction"
-                    style="@style/text_style_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/bus_line"
-                    android:background="@drawable/frame_black_light_bg"
-                    android:gravity="center"
-                    android:padding="5.0dp"
-                    android:text="开往 体育场" />
-            </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/station_next"
@@ -45,62 +21,101 @@
                 android:drawableLeft="@mipmap/next_station"
                 android:paddingLeft="10.0dp"
                 android:text="下一站: 西三条" />
+
+            <LinearLayout
+                android:id="@+id/bus_line_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_40"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true">
+
+                <TextView
+                    android:id="@+id/bus_line"
+                    style="@style/text_style_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_40"
+                    android:paddingLeft="10.0dp"
+                    android:paddingRight="10.0dp"
+                    android:layout_weight="2"
+                    android:text="25路" />
+                <FrameLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/direction"
+                        style="@style/text_style_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/bus_line"
+                        android:background="@drawable/frame_black_light_bg"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:paddingLeft="5.0dp"
+                        android:paddingRight="5.0dp"
+                        android:textColor="@color/text_black_light"
+                        android:text="开往 体育场" />
+                </FrameLayout>
+
+
+            </LinearLayout>
         </RelativeLayout>
 
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical">
-            <LinearLayout android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+            <!--<LinearLayout android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="vertical"-->
+                <!--android:visibility="invisible"-->
+                <!--android:layout_marginRight="10.0dp">-->
 
-                <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-                <LinearLayout android:layout_width="wrap_content"
-                    android:layout_height="@dimen/height_40"
-                    android:layout_alignParentRight="true"
-                    android:orientation="horizontal">
-                    <TextView android:id="@id/bus_one"
-                        android:layout_width="wrap_content"
-                        android:layout_toLeftOf="@+id/xinhao"
-                        android:layout_height="match_parent"
-                        style="@style/text_style_2"
-                        android:gravity="bottom"
-                        android:text="5"/>
-                    <LinearLayout android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="bottom|center_horizontal"
-                        android:orientation="vertical">
-                        <ImageView
-                           android:layout_width="@dimen/height_10"
-                            android:layout_height="@dimen/height_10"
-                            android:src="@drawable/xinhao"/>
-                        <TextView android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/text_style_3"
-                            android:text="分"/>
-                    </LinearLayout>
+                <!--<RelativeLayout android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1">-->
+                <!--<LinearLayout android:layout_width="wrap_content"-->
+                    <!--android:layout_height="@dimen/height_40"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:orientation="horizontal">-->
+                    <!--<TextView android:id="@id/bus_one"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_toLeftOf="@+id/xinhao"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--style="@style/text_style_2"-->
+                        <!--android:gravity="bottom"-->
+                        <!--android:text="5"/>-->
+                    <!--<LinearLayout android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:gravity="bottom|center_horizontal"-->
+                        <!--android:orientation="vertical">-->
+                        <!--<ImageView-->
+                           <!--android:layout_width="@dimen/height_10"-->
+                            <!--android:layout_height="@dimen/height_10"-->
+                            <!--android:src="@drawable/xinhao"/>-->
+                        <!--<TextView android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--style="@style/text_style_3"-->
+                            <!--android:text="分"/>-->
+                    <!--</LinearLayout>-->
 
 
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
-                <TextView
-                    android:id="@id/bus_other"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    style="@style/text_style_4"
-                    android:text="3分，4分"
-                    android:gravity="center_vertical|right" />
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:id="@id/bus_other"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--style="@style/text_style_4"-->
+                    <!--android:text="3分，4分"-->
+                    <!--android:gravity="center_vertical|right" />-->
+            <!--</LinearLayout>-->
             <View android:layout_width="0.1dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5.0dp"

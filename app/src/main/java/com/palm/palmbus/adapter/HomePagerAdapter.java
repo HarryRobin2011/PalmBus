@@ -14,7 +14,10 @@ import com.palm.palmbus.adapter.base.BaseMyAdapter;
 import com.palm.palmbus.bean.HomeLineInfoBean;
 import com.palm.palmbus.bean.HomeListBean;
 import com.palm.palmbus.bean.LineInfoBean;
+import com.palm.palmbus.bean.StationBean;
+import com.palm.palmbus.config.MapFlag;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -64,7 +67,7 @@ public class HomePagerAdapter extends BaseMyAdapter {
                 TextView busOther = (TextView) view.findViewById(R.id.bus_other);
                 ImageView change = (ImageView) view.findViewById(R.id.change_direction);
                 busLine.setText(lineInfoBean.getLineList().get(0).getLineName());
-                direction.setText(lineInfoBean.getLineList().get(0).getEndStation());
+                direction.setText("开往："+lineInfoBean.getLineList().get(0).getEndStation());
                 holder.content.addView(view);
             }
         }
@@ -86,4 +89,20 @@ public class HomePagerAdapter extends BaseMyAdapter {
             ButterKnife.bind(this, view);
         }
     }
+
+    /**
+     * 计算当前站下一站，以及该线路公交车车距离现在车站的时间
+     * key nextStation
+     * key List 公交车距离该站的距离
+     */
+//    private HashMap reckonBusLine(String currentStation,HomeLineInfoBean homeLineInfoBean){
+//        List<StationBean> stationBeanList = homeLineInfoBean.getInfoBean().getStationList();
+//        HashMap dataMap = new HashMap();
+//        for(int i =0;i <stationBeanList.size();i++){
+//            StationBean stationBean = stationBeanList.get(i);
+//            if(currentStation.equals(stationBean.getStationName())&&stationBean.getSxx().equals(homeLineInfoBean.getSxx())){
+//                dataMap.put(MapFlag.STATION_NEXT,);
+//            }
+//        }
+//    }
 }
