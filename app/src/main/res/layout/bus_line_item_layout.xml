@@ -10,32 +10,35 @@
         android:orientation="horizontal">
         <RelativeLayout android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/station_next"
-                style="@style/text_style_4"
+                style="@style/text_style_3"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/height_40"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/bus_line_layout"
                 android:drawableLeft="@mipmap/next_station"
                 android:paddingLeft="10.0dp"
+                android:textColor="@color/text_gray_dark_l"
                 android:text="下一站: 西三条" />
 
             <LinearLayout
                 android:id="@+id/bus_line_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_40"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true">
 
                 <TextView
                     android:id="@+id/bus_line"
-                    style="@style/text_style_3"
+                    style="@style/text_style_2"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_40"
                     android:paddingLeft="10.0dp"
                     android:paddingRight="10.0dp"
+                    android:gravity="center_vertical"
                     android:layout_weight="2"
                     android:text="25路" />
                 <FrameLayout android:layout_width="match_parent"
@@ -43,7 +46,7 @@
                     android:layout_weight="1">
                     <TextView
                         android:id="@+id/direction"
-                        style="@style/text_style_4"
+                        style="@style/text_style_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/bus_line"
@@ -52,7 +55,7 @@
                         android:layout_gravity="center_vertical"
                         android:paddingLeft="5.0dp"
                         android:paddingRight="5.0dp"
-                        android:textColor="@color/text_black_light"
+                        android:textColor="@color/text_gray_dark_l"
                         android:text="开往 体育场" />
                 </FrameLayout>
 
@@ -124,10 +127,13 @@
             <ImageView android:id="@id/change_direction"
                 android:layout_width="@dimen/height_50"
                 android:layout_height="@dimen/height_50"
-                android:src="@mipmap/change"
+                android:src="@mipmap/right_jian2"
                 android:scaleType="center"/>
         </LinearLayout>
     </LinearLayout>
+    <View android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/line_dark"/>
 
 
 </LinearLayout>

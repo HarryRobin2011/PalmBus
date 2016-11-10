@@ -23,10 +23,9 @@
             android:gravity="center"
             android:layout_gravity="center_vertical"
             android:text="@string/location"
-            android:textColor="@android:color/holo_green_light" />
-    <View android:layout_width="1.0dp"
-        android:layout_height="match_parent"
-        android:background="@color/line_dark"/>
+            style="@style/text_style_3"
+            android:textColor="@android:color/holo_green_dark" />
+    <View style="@style/line_style_row_dark"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,18 +40,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_30"
                 android:gravity="center_vertical"
-                style="@style/text_style_3"
+                style="@style/text_style_2"
                 android:text="滨州日报社" />
 
             <TextView
                 android:id="@id/bus"
-                style="@style/text_style_4"
+                style="@style/text_style_3"
                 android:textColor="@color/text_gray_dark_l"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_20"/>
         </LinearLayout>
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/line_dark"/>
 
     <LinearLayout
         android:id="@id/content"

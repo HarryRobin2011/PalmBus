@@ -38,6 +38,11 @@
         <item name="android:textColor">@color/text_black_light</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="text_style_3_title">
+        <item name="android:textSize">@dimen/text_size_3</item>
+        <item name="android:textColor">@color/text_black_light</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 
     <style name="text_style_3">
         <item name="android:textSize">@dimen/text_size_4</item>
@@ -52,6 +57,18 @@
         <item name="android:textColor">@color/text_gray_dark</item>
         <item name="android:gravity">center_vertical</item>
 
+    </style>
+
+    <style name="line_style_col_dark">
+    <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.1dp</item>
+        <item name="android:background">@color/line_dark</item>
+    </style>
+
+    <style name="line_style_row_dark">
+        <item name="android:layout_width">0.1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/line_dark</item>
     </style>
 
 

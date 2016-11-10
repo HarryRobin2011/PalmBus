@@ -12,7 +12,12 @@ import android.widget.ListView;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.busline.BusLineResult;
+import com.baidu.mapapi.search.busline.BusLineSearch;
+import com.baidu.mapapi.search.busline.BusLineSearchOption;
+import com.baidu.mapapi.search.busline.OnGetBusLineSearchResultListener;
 import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
 import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
@@ -59,7 +64,7 @@ import okhttp3.Response;
  * Created by Robin on 2016/10/23.
  */
 
-public class HomePagerFragment extends BaseFragment implements  BaseMyAdapter.OnChildClickListener {
+public class HomePagerFragment extends BaseFragment implements BaseMyAdapter.OnChildClickListener {
     @BindView(R.id.list_view)
     ListView listView;
     private View bannerView;
@@ -70,12 +75,12 @@ public class HomePagerFragment extends BaseFragment implements  BaseMyAdapter.On
     private PoiSearch poiSearch;
     private HomePagerAdapter busStationListAdapter;
     private List stationList;
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 0:
                     showToast((Integer) msg.obj);
                     break;
@@ -137,21 +142,6 @@ public class HomePagerFragment extends BaseFragment implements  BaseMyAdapter.On
         poiSearch.searchNearby(searchOption);
     }
 
-    /**
-     * 搜索公交车信息
-     * @param latitude
-     * @param longitude
-     * @param currentLine
-     */
-    private void searchPoiForBus(double latitude, double longitude,String currentLine){
-        LatLng latLng = new LatLng(latitude, longitude);
-        PoiNearbySearchOption searchOption = new PoiNearbySearchOption();
-        searchOption.keyword(currentLine);
-        searchOption.location(latLng);
-        searchOption.radius(1000);
-        poiSearch.setOnGetPoiSearchResultListener(new BusInfoOnGetPoiSearchResultListener());
-        poiSearch.searchNearby(searchOption);
-    }
 
     /**
      * 检索公交线路
@@ -203,9 +193,8 @@ public class HomePagerFragment extends BaseFragment implements  BaseMyAdapter.On
     /**
      * 组装列表数据
      */
-    @Deprecated
     private List<HomeListBean> packageData(List<PoiInfo> poiInfoList) throws IOException {
-        if (poiInfoList == null||poiInfoList.size() ==0){
+        if (poiInfoList == null || poiInfoList.size() == 0) {
             Message msg = Message.obtain();
             msg.what = 0;
             msg.obj = R.string.current_no_station;
@@ -225,17 +214,18 @@ public class HomePagerFragment extends BaseFragment implements  BaseMyAdapter.On
                     //站点包含的线路
                     HomeLineInfoBean homeLineInfoBean = new HomeLineInfoBean();
                     homeLineInfoBean.setSxx("0");// 默认方向
-                    Response lineInfoResponse = OkHttpUtils.post().url(ControlUrl.PALM_GET_LINE_STATION).addParams(ParamsKey.LINE_CODE, lineName[i].replace("路","")).build().execute();
+                    Response lineInfoResponse = OkHttpUtils.post().url(ControlUrl.PALM_GET_LINE_STATION).addParams(ParamsKey.LINE_CODE, lineName[i].replace("路", "")).build().execute();
                     LineInfoBean lineInfoBean = JSONHelper.fromJSONObject(lineInfoResponse.body().string(), LineInfoBean.class);
                     homeLineInfoBean.setInfoBean(lineInfoBean);
 
 
-                    Response busInfoResponse = OkHttpUtils.post().url(ControlUrl.PALM_GET_LINE_BUS_LIST).
-                            addParams(ParamsKey.LINE_CODE, lineName[i].replace("路","")).
-                            addParams(ParamsKey.SXX,homeLineInfoBean.getSxx()).
-                            build().execute();
-                    List<BusInfoBean> busInfoBeanList = JSONHelper.fromJSONObject(busInfoResponse.body().string(), new TypeToken<List<BusInfoBean>>(){}.getType());
-                    homeLineInfoBean.setBusInfoBeanList(busInfoBeanList);
+//                    Response busInfoResponse = OkHttpUtils.post().url(ControlUrl.PALM_GET_LINE_BUS_LIST).
+//                            addParams(ParamsKey.LINE_CODE, lineName[i].replace("路", "")).
+//                            addParams(ParamsKey.SXX, homeLineInfoBean.getSxx()).
+//                            build().execute();
+//                    List<BusInfoBean> busInfoBeanList = JSONHelper.fromJSONObject(busInfoResponse.body().string(), new TypeToken<List<BusInfoBean>>() {
+//                    }.getType());
+//                    homeLineInfoBean.setBusInfoBeanList(busInfoBeanList);
                     stationLineList.add(homeLineInfoBean);
                 }
                 homeListBean.setHomeLineInfoBeanList(stationLineList);
@@ -270,15 +260,15 @@ public class HomePagerFragment extends BaseFragment implements  BaseMyAdapter.On
         @Override
         protected void onPostExecute(List<HomeListBean> homeListBeen) {
             super.onPostExecute(homeListBeen);
-            if(homeListBeen != null){
-                 setAdapter(homeListBeen);
-            }else{
+            if (homeListBeen != null) {
+                setAdapter(homeListBeen);
+            } else {
                 showToast(R.string.current_no_station);
             }
         }
     }
 
-    private class LocationOnGetPoiSearchResultListener implements OnGetPoiSearchResultListener{
+    private class LocationOnGetPoiSearchResultListener implements OnGetPoiSearchResultListener {
 
         /**
          * 搜索回掉
@@ -288,10 +278,10 @@ public class HomePagerFragment extends BaseFragment implements  BaseMyAdapter.On
         @Override
         public void onGetPoiResult(PoiResult poiResult) {
             LogUtil.logOutPut(JSONHelper.toJSONString(poiResult));
-          //  new MyTask(poiResult.getAllPoi()).execute();
-            if(poiResult.getAllPoi() != null && poiResult.getAllPoi().size() > 0){
-
-            }
+              new MyTask(poiResult.getAllPoi()).execute();
+//            if (poiResult.getAllPoi() != null && poiResult.getAllPoi().size() > 0) {
+//                searchPoiForBus(poiResult.getAllPoi().get(0).address.split(";")[0]);
+//            }
         }
 
         @Override
@@ -308,25 +298,48 @@ public class HomePagerFragment extends BaseFragment implements  BaseMyAdapter.On
     /**
      * 搜索公交车详情
      */
-    private class BusInfoOnGetPoiSearchResultListener implements OnGetPoiSearchResultListener{
-
-        @Override
-        public void onGetPoiResult(PoiResult poiResult) {
-
-        }
-
-        @Override
-        public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
-
-        }
-
-        @Override
-        public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
-
-        }
-    }
-
-
+//    private class BusInfoOnGetPoiSearchResultListener implements OnGetPoiSearchResultListener {
+//
+//        @Override
+//        public void onGetPoiResult(PoiResult poiResult) {
+//            if (poiResult == null || poiResult.error != SearchResult.ERRORNO.NO_ERROR) {
+//                return;
+//            }
+//            //遍历所有POI，找到类型为公交线路的POI
+//            for (PoiInfo poi : poiResult.getAllPoi()) {
+//                if (poi.type == PoiInfo.POITYPE.BUS_LINE || poi.type == PoiInfo.POITYPE.SUBWAY_LINE) {
+//                    //说明该条POI为公交信息，获取该条POI的UID
+//                    String busLineId = poi.uid;
+//                    BusLineSearch busLineSearch = BusLineSearch.newInstance();
+//                    busLineSearch.setOnGetBusLineSearchResultListener(new GetBusLineSearchResultListener());
+//                    //如下代码为发起检索代码，定义监听者和设置监听器的方法与POI中的类似
+//                    busLineSearch.searchBusLine((new BusLineSearchOption()
+//                            .city(activity.bdLocation.getCity())
+//                            .uid(busLineId)));
+//                    break;
+//                }
+//            }
+//        }
+//
+//    @Override
+//    public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
+//
+//    }
+//
+//    @Override
+//    public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+//
+//    }
+//
+//}
+//
+//    private class GetBusLineSearchResultListener implements OnGetBusLineSearchResultListener{
+//
+//        @Override
+//        public void onGetBusLineResult(BusLineResult busLineResult) {
+//            LogUtil.logOutPut(busLineResult.getUid());
+//        }
+//    }
 
 
     private void setAdapter(List dataList) {

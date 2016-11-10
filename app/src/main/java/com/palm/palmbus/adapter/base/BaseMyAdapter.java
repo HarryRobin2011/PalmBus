@@ -17,7 +17,6 @@ public abstract class BaseMyAdapter extends BaseAdapter implements View.OnClickL
     public List dataList;
     public Context mContext;
     public LayoutInflater mInflater;
-    public HashMap<Integer,View> dataMap;
     public ViewType viewType = ViewType.SINGLE;
     private OnChildClickListener onChildClickListener;
 
@@ -25,7 +24,6 @@ public abstract class BaseMyAdapter extends BaseAdapter implements View.OnClickL
     public BaseMyAdapter(Context context, List dataList){
         this.dataList = dataList;
         this.mContext = context;
-        dataMap = new HashMap<Integer, View>();
         mInflater = LayoutInflater.from(mContext);
     }
 
@@ -89,7 +87,7 @@ public abstract class BaseMyAdapter extends BaseAdapter implements View.OnClickL
     @Override
     public View getView(int position, View cellView, ViewGroup parent) {
         BusinessHolder holder = null;
-        if(dataMap.get(position) == null){
+        if(cellView == null){
             if(ViewType.SINGLE.equals(viewType)){
                 cellView = createCellView();
             }else{
@@ -97,11 +95,9 @@ public abstract class BaseMyAdapter extends BaseAdapter implements View.OnClickL
             }
 
             holder = createCellHolder(cellView);
-            cellView.setTag(holder);
-            dataMap.put(position,cellView);
+            cellView.setTag(position,holder);
         }else{
-            cellView = dataMap.get(position);
-            holder = (BusinessHolder) cellView.getTag();
+            holder = (BusinessHolder) cellView.getTag(position);
         }
         holder.position = position;
         buildData(position,cellView,holder);

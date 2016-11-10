@@ -58,6 +58,9 @@ public class HomePagerAdapter extends BaseMyAdapter {
         holder.homePageItemLayout.setOnClickListener(this);
         if(position == 0){
             for (HomeLineInfoBean homeLineInfoBean:homeListBean.getHomeLineInfoBeanList()){
+                if(holder.content.getChildCount() > 0){
+                    holder.content.removeAllViewsInLayout();
+                }
                 LineInfoBean lineInfoBean = homeLineInfoBean.getInfoBean();
                 View view = LayoutInflater.from(mContext).inflate(R.layout.bus_line_item_layout,null);
                 TextView busLine = (TextView) view.findViewById(R.id.bus_line);
