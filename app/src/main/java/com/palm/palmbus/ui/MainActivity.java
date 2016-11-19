@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,8 @@ import com.palm.palmbus.R;
 import com.palm.palmbus.ui.base.BaseFragment;
 import com.palm.palmbus.ui.base.BasePalmActivity;
 import com.palm.palmbus.ui.fragment.HomePagerFragment;
+import com.palm.palmbus.ui.fragment.MeFragment;
+import com.palm.palmbus.ui.fragment.TransferFragment;
 
 import java.util.ArrayList;
 
@@ -25,8 +28,6 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
     @BindView(R.id.buttom_bar)
     BottomNavigationBar buttomBar;
     private BaseFragment currentFragment;
-    private FragmentTransaction transaction;
-    private FragmentManager fm;
 
     private String[] titles = new String[]{"实时", "换乘","我的"};
     private int[] titleIcons = new int[]{R.mipmap.home, R.mipmap.line, R.mipmap.me};
@@ -34,6 +35,9 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
     private String permissionInfo;
 
     private final int SDK_PERMISSION_REQUEST = 127;
+
+
+    FragmentManager fm = getSupportFragmentManager();
 
 
 
@@ -48,6 +52,7 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
         buttomBar.setMode(BottomNavigationBar.MODE_FIXED);
         buttomBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
         );
+        buttomBar.setTabSelectedListener(this);
         for (int i = 0; i < titles.length; i++) {
             int resId = titleIcons[i];
             buttomBar.addItem(new BottomNavigationItem(resId, titles[i]));
@@ -57,12 +62,11 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
     }
 
     private void initFragment() {
-        fm = getSupportFragmentManager();
-        transaction = fm.beginTransaction();
+        FragmentTransaction transaction = fm.beginTransaction();
         if (currentFragment == null) {
             currentFragment = HomePagerFragment.newInstance();
         }
-        transaction.add(R.id.content, currentFragment, titles[0]).commit();
+        transaction.add(R.id.content, currentFragment, titles[0]).commitAllowingStateLoss();
     }
 
     @Override
@@ -71,36 +75,36 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
 
     @Override
     public void onTabSelected(int position) {
-        currentFragment = (BaseFragment) fm.findFragmentByTag(titles[position]);
+        Fragment currentFragment = fm.findFragmentByTag(titles[position]);
         switch (position) {
             case 0:
                 if (currentFragment == null) {
-                    currentFragment = new HomePagerFragment();
+                    currentFragment = HomePagerFragment.newInstance();
                 }
                 break;
             case 1:
                 if (currentFragment == null) {
-                    currentFragment = new HomePagerFragment();
+                    currentFragment = TransferFragment.newInstance();
                 }
                 break;
             case 2:
                 if (currentFragment == null) {
-                    currentFragment = new HomePagerFragment();
+                    currentFragment = MeFragment.newInstance();
                 }
                 break;
         }
         if (currentFragment.isAdded()) {
-            transaction.show(currentFragment).commitAllowingStateLoss();
+          fm.beginTransaction().show(currentFragment).commitAllowingStateLoss();
         } else {
-            transaction.add(currentFragment, titles[position]).commitAllowingStateLoss();
+           fm.beginTransaction().add(R.id.content,currentFragment, titles[position]).commitAllowingStateLoss();
         }
     }
 
     @Override
     public void onTabUnselected(int position) {
-        currentFragment = (BaseFragment) fm.findFragmentByTag(titles[position]);
+        Fragment currentFragment = fm.findFragmentByTag(titles[position]);
         if (currentFragment != null) {
-            transaction.hide(currentFragment).commitAllowingStateLoss();
+            getSupportFragmentManager().beginTransaction().hide(currentFragment).commitAllowingStateLoss();
         }
     }
 

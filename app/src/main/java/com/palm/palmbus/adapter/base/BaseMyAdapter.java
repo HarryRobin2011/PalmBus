@@ -1,6 +1,7 @@
 package com.palm.palmbus.adapter.base;
 
 import android.content.Context;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,14 @@ public abstract class BaseMyAdapter extends BaseAdapter implements View.OnClickL
     public LayoutInflater mInflater;
     public ViewType viewType = ViewType.SINGLE;
     private OnChildClickListener onChildClickListener;
+    private SparseArray<View> mViews;
 
 
     public BaseMyAdapter(Context context, List dataList){
         this.dataList = dataList;
         this.mContext = context;
         mInflater = LayoutInflater.from(mContext);
+        mViews = new SparseArray<>();
     }
 
     public void setOnChildClickListener(OnChildClickListener onChildClickListener) {
@@ -87,17 +90,19 @@ public abstract class BaseMyAdapter extends BaseAdapter implements View.OnClickL
     @Override
     public View getView(int position, View cellView, ViewGroup parent) {
         BusinessHolder holder = null;
+        cellView = mViews.get(position);
         if(cellView == null){
             if(ViewType.SINGLE.equals(viewType)){
                 cellView = createCellView();
+                mViews.put(position,cellView);
             }else{
                 cellView = createMoreCellView(position);
             }
 
             holder = createCellHolder(cellView);
-            cellView.setTag(position,holder);
+            cellView.setTag(holder);
         }else{
-            holder = (BusinessHolder) cellView.getTag(position);
+            holder = (BusinessHolder) cellView.getTag();
         }
         holder.position = position;
         buildData(position,cellView,holder);

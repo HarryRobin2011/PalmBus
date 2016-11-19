@@ -7,4 +7,21 @@
     <string name="online_num">在线车辆：</string>
     <string name="location_error">定位失败</string>
     <string name="current_no_station">定位失败，请刷新重试~</string>
+    <string name="location_me">我的位置</string>
+    <string name="select_location">选点</string>
+    <string name="location_from">请输入终点</string>
+    <string name="transfer">换乘</string>
+    <string name="login_click">点击登录</string>
+    <string name="login_point">登录赚积分</string>
+    <string name="check_in">签到</string>
+    <string name="share_five">分享</string>
+    <string name="integral_mall">积分商城</string>
+    <string name="today_headlines">今日头条</string>
+    <string name="integral_jobs">积分任务</string>
+    <string name="tenancy">便宜租房</string>
+    <string name="high_paying_jobs">高薪工作</string>
+    <string name="personal_dukan">便民服务</string>
+    <string name="shop_promotion">商家促销</string>
+    <string name="personal_happy_time">轻松一刻</string>
+    <string name="riding_record">乘车记录</string>
 </resources>

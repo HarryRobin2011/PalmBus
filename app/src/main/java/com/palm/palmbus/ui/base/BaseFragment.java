@@ -44,6 +44,7 @@ public abstract class BaseFragment extends Fragment{
 
     protected abstract void initOperation();
 
+
     public void showToast(int resId){
         Toast.makeText(mContext,resId,Toast.LENGTH_SHORT).show();
     }
