@@ -169,10 +169,10 @@ public class HomePagerFragment extends BaseFragment implements BaseMyAdapter.OnC
     public void OnChildClick(View view) {
         switch (view.getId()) {
             case R.id.home_page_item_layout:
-                Intent intent = new Intent(mContext, StationInfoActivity.class);
-                PoiInfo poiInfo = (PoiInfo) busStationListAdapter.dataList.get((Integer) view.getTag());
-                intent.putExtra(IntentFlag.KEY, poiInfo.uid);
-                startActivity(intent);
+//                Intent intent = new Intent(mContext, StationInfoActivity.class);
+//                HomeListBean listBean = (HomeListBean) busStationListAdapter.dataList.get((Integer) view.getTag());
+//                intent.putExtra(IntentFlag.KEY, listBean.getStationInfo().uid);
+//                startActivity(intent);
                 break;
         }
     }
