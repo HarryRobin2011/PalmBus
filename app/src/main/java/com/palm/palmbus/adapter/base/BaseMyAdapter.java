@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 
-import java.util.HashMap;
 import java.util.List;
 
 /**

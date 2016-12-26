@@ -2,7 +2,6 @@ package com.palm.palmbus.utils;
 
 import com.palm.palmbus.bean.BusInfoBean;
 import com.palm.palmbus.bean.StationBean;
-import com.palm.palmbus.config.MapFlag;
 
 import java.util.HashMap;
 import java.util.List;

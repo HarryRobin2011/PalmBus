@@ -1,6 +1,5 @@
 package com.palm.palmbus.ui.fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -12,12 +11,7 @@ import android.widget.ListView;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.search.busline.BusLineResult;
-import com.baidu.mapapi.search.busline.BusLineSearch;
-import com.baidu.mapapi.search.busline.BusLineSearchOption;
-import com.baidu.mapapi.search.busline.OnGetBusLineSearchResultListener;
 import com.baidu.mapapi.search.core.PoiInfo;
-import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
 import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
@@ -26,7 +20,6 @@ import com.baidu.mapapi.search.poi.PoiIndoorResult;
 import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
-import com.google.gson.reflect.TypeToken;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 import com.palm.palmbus.MyApplication;
@@ -34,30 +27,23 @@ import com.palm.palmbus.R;
 import com.palm.palmbus.adapter.BannerViewPagerAdapter;
 import com.palm.palmbus.adapter.HomePagerAdapter;
 import com.palm.palmbus.adapter.base.BaseMyAdapter;
-import com.palm.palmbus.bean.BusInfoBean;
 import com.palm.palmbus.bean.HomeLineInfoBean;
 import com.palm.palmbus.bean.HomeListBean;
 import com.palm.palmbus.bean.LineInfoBean;
 import com.palm.palmbus.config.ControlUrl;
-import com.palm.palmbus.config.IntentFlag;
 import com.palm.palmbus.config.LogUtil;
 import com.palm.palmbus.config.ParamsKey;
-import com.palm.palmbus.model.BusListModel;
 import com.palm.palmbus.service.LocationService;
-import com.palm.palmbus.ui.StationInfoActivity;
 import com.palm.palmbus.ui.base.BaseFragment;
 import com.palm.palmbus.ui.base.BasePalmActivity;
 import com.palm.palmbus.utils.JSONHelper;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.Call;
 import okhttp3.Response;
 
 /**

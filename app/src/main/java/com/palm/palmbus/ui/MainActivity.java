@@ -29,8 +29,8 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
     BottomNavigationBar buttomBar;
     private BaseFragment currentFragment;
 
-    private String[] titles = new String[]{"实时", "换乘","我的"};
-    private int[] titleIcons = new int[]{R.mipmap.home, R.mipmap.line, R.mipmap.me};
+    private String[] titles = new String[]{"实时", "换乘","美食","我的"};
+    private int[] titleIcons = new int[]{R.mipmap.bus_tab1, R.mipmap.bus_tab2,R.mipmap.bus_tab3,R.mipmap.bus_tab4};
 
     private String permissionInfo;
 
