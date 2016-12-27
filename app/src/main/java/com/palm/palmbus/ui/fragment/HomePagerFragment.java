@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -61,58 +62,27 @@ public class HomePagerFragment extends BaseFragment implements BaseMyAdapter.OnC
     private PoiSearch poiSearch;
     private HomePagerAdapter busStationListAdapter;
     private List stationList;
-    private Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    showToast((Integer) msg.obj);
-                    break;
-            }
-        }
-    };
 
     public static HomePagerFragment newInstance() {
         HomePagerFragment fragment = new HomePagerFragment();
         return fragment;
     }
 
-    @Override
-    protected int initResource() {
-        return R.layout.home_pager_layout;
-    }
 
-    @Override
-    protected void initData() {
-        locationService = ((MyApplication) getActivity().getApplication()).getmLocationService();
-        mBdLocationListener = new BdListener();
-        // 实例化搜索对象
-        poiSearch = PoiSearch.newInstance();
 
-        bannerView = mInflater.inflate(R.layout.home_head_view_layout, null);
-        mRollViewPager = (RollPagerView) bannerView.findViewById(R.id.view_pager);
-        //设置播放时间间隔
-        mRollViewPager.setPlayDelay(1000);
-        //设置透明度
-        mRollViewPager.setAnimationDurtion(500);
-        //设置适配器
-        mRollViewPager.setHintView(new ColorPointHintView(mContext, Color.YELLOW, Color.WHITE));
-    }
 
-    @Override
-    protected void initOperation() {
-        if (bannerViewPagerAdapter == null) {
-            bannerViewPagerAdapter = new BannerViewPagerAdapter(mContext, new int[]{R.mipmap.banner_02});
-        }
-        mRollViewPager.setAdapter(bannerViewPagerAdapter);
-        listView.addHeaderView(bannerView);
-        listView.setAdapter(null);
-        locationService.registerListener(mBdLocationListener);
-        locationService.start();
-        //  request();
-    }
+   // @Override
+//    protected void initOperation() {
+//        if (bannerViewPagerAdapter == null) {
+//            bannerViewPagerAdapter = new BannerViewPagerAdapter(getContext(), new int[]{R.mipmap.banner_02});
+//        }
+//        mRollViewPager.setAdapter(bannerViewPagerAdapter);
+//        listView.addHeaderView(bannerView);
+//        listView.setAdapter(null);
+//        locationService.registerListener(mBdLocationListener);
+//        locationService.start();
+//        //  request();
+//    }
 
 
     /**
@@ -163,6 +133,33 @@ public class HomePagerFragment extends BaseFragment implements BaseMyAdapter.OnC
         }
     }
 
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.home_pager_layout;
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    protected void initView() {
+        locationService = ((MyApplication) getActivity().getApplication()).getmLocationService();
+        mBdLocationListener = new BdListener();
+        // 实例化搜索对象
+        poiSearch = PoiSearch.newInstance();
+
+        bannerView = mInflater.inflate(R.layout.home_head_view_layout, null);
+        mRollViewPager = (RollPagerView) bannerView.findViewById(R.id.view_pager);
+        //设置播放时间间隔
+        mRollViewPager.setPlayDelay(1000);
+        //设置透明度
+        mRollViewPager.setAnimationDurtion(500);
+        //设置适配器
+        mRollViewPager.setHintView(new ColorPointHintView(getContext(), Color.YELLOW, Color.WHITE));
+    }
+
     /**
      * 定位回掉
      */
@@ -184,7 +181,7 @@ public class HomePagerFragment extends BaseFragment implements BaseMyAdapter.OnC
             Message msg = Message.obtain();
             msg.what = 0;
             msg.obj = R.string.current_no_station;
-            mHandler.sendMessage(msg);
+           // mHandler.sendMessage(msg);
             return null;
         }
         List<HomeListBean> homeListBeanList = new LinkedList<>();
@@ -249,7 +246,7 @@ public class HomePagerFragment extends BaseFragment implements BaseMyAdapter.OnC
             if (homeListBeen != null) {
                 setAdapter(homeListBeen);
             } else {
-                showToast(R.string.current_no_station);
+                showLongToast(R.string.current_no_station);
             }
         }
     }
@@ -330,7 +327,7 @@ public class HomePagerFragment extends BaseFragment implements BaseMyAdapter.OnC
 
     private void setAdapter(List dataList) {
         if (busStationListAdapter == null) {
-            busStationListAdapter = new HomePagerAdapter(mContext, dataList);
+            busStationListAdapter = new HomePagerAdapter(getContext(), dataList);
         }
         busStationListAdapter.setOnChildClickListener(this);
         listView.setAdapter(busStationListAdapter);

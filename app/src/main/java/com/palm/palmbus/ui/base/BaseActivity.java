@@ -3,55 +3,75 @@ package com.palm.palmbus.ui.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 
 import com.palm.palmbus.R;
+import com.palm.palmbus.config.AppManager;
+import com.palm.palmbus.config.BuildConfig;
 import com.palm.palmbus.ui.baserx.RxManager;
-import com.palm.palmbus.utils.TUtil;
 import com.palm.palmbus.utils.ToastUitl;
+import com.palm.palmbus.utils.daynightmodeutils.ChangeModeController;
 import com.palm.palmbus.widget.LoadingDialog;
+import com.palm.palmbus.widget.StatusBarCompat;
+import com.umeng.analytics.MobclickAgent;
 
-import butterknife.ButterKnife;
 
 /**
- * Created by Robin on 2016/10/23.
+ * Created by Robin on 2016/12/27.
  */
 
-public abstract class BaseFragment<T extends BasePresenter,E extends BaseModel> extends Fragment{
-    protected View rootView;
+public abstract class BaseActivity <T extends BasePresenter,E extends BaseModel> extends AppCompatActivity {
     public T mPresenter;
     public E mModel;
     public RxManager mRxManager;
-    public LayoutInflater mInflater;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null)
-            rootView = inflater.inflate(getLayoutResource(), container, false);
-
-        this.mInflater = inflater;
-
-        mRxManager=new RxManager();
-        ButterKnife.bind(this, rootView);
-        mPresenter = TUtil.getT(this, 0);
-        mModel= TUtil.getT(this,1);
-        if(mPresenter!=null){
-            mPresenter.mContext=this.getActivity();
-        }
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getLayoutId();
+        initData();
+        initOperation();
         initPresenter();
-        initView();
-        return rootView;
     }
-    //获取布局文件
-    protected abstract int getLayoutResource();
-    //简单页面无需mvp就不用管此方法即可,完美兼容各种实际场景的变通
-    public abstract void initPresenter();
-    //初始化view
-    protected abstract void initView();
+
+    protected abstract int getLayoutId();
+
+    protected abstract void initData();
+
+    protected abstract void initOperation();
+
+    protected abstract void initPresenter();
+
+    public void startActivity(){
+
+    }
+
+    /**
+     * 设置主题
+     */
+    private void initTheme() {
+        ChangeModeController.setTheme(this, R.style.DayTheme, R.style.NightTheme);
+    }
+    /**
+     * 着色状态栏（4.4以上系统有效）
+     */
+    protected void SetStatusBarColor(){
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this,R.color.main_color));
+    }
+    /**
+     * 着色状态栏（4.4以上系统有效）
+     */
+    protected void SetStatusBarColor(int color){
+        StatusBarCompat.setStatusBarColor(this,color);
+    }
+    /**
+     * 沉浸状态栏（4.4以上系统有效）
+     */
+    protected void SetTranslanteBar(){
+        StatusBarCompat.translucentStatusBar(this);
+    }
+
 
 
     /**
@@ -74,7 +94,7 @@ public abstract class BaseFragment<T extends BasePresenter,E extends BaseModel> 
     public void startActivityForResult(Class<?> cls, Bundle bundle,
                                        int requestCode) {
         Intent intent = new Intent();
-        intent.setClass(getActivity(), cls);
+        intent.setClass(this, cls);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
@@ -86,38 +106,35 @@ public abstract class BaseFragment<T extends BasePresenter,E extends BaseModel> 
      **/
     public void startActivity(Class<?> cls, Bundle bundle) {
         Intent intent = new Intent();
-        intent.setClass(getActivity(), cls);
+        intent.setClass(this, cls);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
         startActivity(intent);
     }
 
-
-
     /**
-     * 开启加载进度条
+     * 开启浮动加载进度条
      */
     public void startProgressDialog() {
-        LoadingDialog.showDialogForLoading(getActivity());
+        LoadingDialog.showDialogForLoading(this);
     }
 
     /**
-     * 开启加载进度条
+     * 开启浮动加载进度条
      *
      * @param msg
      */
     public void startProgressDialog(String msg) {
-        LoadingDialog.showDialogForLoading(getActivity(), msg, true);
+        LoadingDialog.showDialogForLoading(this, msg, true);
     }
 
     /**
-     * 停止加载进度条
+     * 停止浮动加载进度条
      */
     public void stopProgressDialog() {
         LoadingDialog.cancelDialogForLoading();
     }
-
 
     /**
      * 短暂显示Toast提示(来自String)
@@ -146,30 +163,52 @@ public abstract class BaseFragment<T extends BasePresenter,E extends BaseModel> 
     public void showLongToast(String text) {
         ToastUitl.showLong(text);
     }
-
-
+    /**
+     * 带图片的toast
+     * @param text
+     * @param res
+     */
     public void showToastWithImg(String text,int res) {
         ToastUitl.showToastWithImg(text,res);
     }
-
     /**
      * 网络访问错误提醒
      */
     public void showNetErrorTip() {
         ToastUitl.showToastWithImg(getText(R.string.net_error).toString(),R.mipmap.ic_wifi_off);
     }
-
     public void showNetErrorTip(String error) {
         ToastUitl.showToastWithImg(error,R.mipmap.ic_wifi_off);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //debug版本不统计crash
+        if(!BuildConfig.isApkInDebug(this)) {
+            //友盟统计
+            MobclickAgent.onResume(this);
+        }
+    }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        //ButterKnife.unbind(this);
+    protected void onPause() {
+        super.onPause();
+        //debug版本不统计crash
+        if(!BuildConfig.isApkInDebug(this)) {
+            //友盟统计
+            MobclickAgent.onPause(this);
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         if (mPresenter != null)
             mPresenter.onDestroy();
         mRxManager.clear();
+        //ButterKnife.unbind(this);
+        AppManager.getAppManager().finishActivity(this);
     }
 
 }

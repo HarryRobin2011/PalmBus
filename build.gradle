@@ -37,4 +37,7 @@ ext{
 
     // App dependencies
     supportLibraryVersion = '24.2.0'
+    rxjavaVersion = '1.2.4'
+    rxandroidVersion = '1.2.1'
+    multidexVersion = '1.0.0'
 }

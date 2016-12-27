@@ -1,6 +1,5 @@
 package com.palm.palmbus.ui.fragment;
 
-import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,12 +14,6 @@ import butterknife.BindView;
  */
 
 public class TransferFragment extends BaseFragment {
-    @BindView(R.id.back)
-    ImageView back;
-    @BindView(R.id.title)
-    TextView title;
-    @BindView(R.id.menu)
-    ImageView menu;
     @BindView(R.id.title_layout)
     LinearLayout titleLayout;
     @BindView(R.id.change)
@@ -43,7 +36,6 @@ public class TransferFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-       title.setText(R.string.transfer);
     }
 
     @Override

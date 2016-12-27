@@ -4,18 +4,16 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
-import android.widget.FrameLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.palm.palmbus.R;
+import com.palm.palmbus.ui.base.BaseActivity;
 import com.palm.palmbus.ui.base.BaseFragment;
-import com.palm.palmbus.ui.base.BasePalmActivity;
+import com.palm.palmbus.ui.fragment.FineFragment;
 import com.palm.palmbus.ui.fragment.HomePagerFragment;
 import com.palm.palmbus.ui.fragment.MeFragment;
 import com.palm.palmbus.ui.fragment.TransferFragment;
@@ -24,7 +22,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class MainActivity extends BasePalmActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
     @BindView(R.id.buttom_bar)
     BottomNavigationBar buttomBar;
     private BaseFragment currentFragment;
@@ -40,9 +38,8 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
     FragmentManager fm = getSupportFragmentManager();
 
 
-
     @Override
-    protected int initView() {
+    protected int getLayoutId() {
         return R.layout.activity_main;
     }
 
@@ -58,8 +55,14 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
             buttomBar.addItem(new BottomNavigationItem(resId, titles[i]));
         }
         buttomBar.setFirstSelectedPosition(0).initialise();
+
+    }
+
+    @Override
+    protected void initOperation() {
         initFragment();
     }
+
 
     private void initFragment() {
         FragmentTransaction transaction = fm.beginTransaction();
@@ -69,8 +72,10 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
         transaction.add(R.id.content, currentFragment, titles[0]).commitAllowingStateLoss();
     }
 
+
     @Override
-    protected void initOperation() {
+    public void initPresenter() {
+
     }
 
     @Override
@@ -92,6 +97,10 @@ public class MainActivity extends BasePalmActivity implements BottomNavigationBa
                     currentFragment = MeFragment.newInstance();
                 }
                 break;
+            case 3:
+                if(currentFragment == null){
+                    currentFragment = FineFragment.newInstance();
+                }
         }
         if (currentFragment.isAdded()) {
           fm.beginTransaction().show(currentFragment).commitAllowingStateLoss();

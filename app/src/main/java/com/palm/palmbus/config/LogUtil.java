@@ -8,7 +8,13 @@ import android.util.Log;
 
 public class LogUtil {
     public static final String TAG = "HarryRobin";
+
+
     public static void logOutPut(String log){
         Log.i(TAG,log);
+    }
+
+    public static void log(String tag,String log){
+        Log.i(tag,log);
     }
 }
