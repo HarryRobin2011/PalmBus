@@ -40,4 +40,8 @@ ext{
     rxjavaVersion = '1.2.4'
     rxandroidVersion = '1.2.1'
     multidexVersion = '1.0.0'
+    retrofitVersion = '2.0.0-beta3';
+    interceptorVersion = '3.1.2';
+    converterGsonVersion = '2.0.0-beta4';
+    adapterRxjavaVersion = '2.0.0-beta4';
 }

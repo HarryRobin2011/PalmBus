@@ -1,7 +1,6 @@
-package com.palm.palmbus.ui.fragment;
+package com.palm.palmbus.ui.main.fragment;
 
-import android.support.v4.app.Fragment;
-
+import com.palm.palmbus.R;
 import com.palm.palmbus.ui.base.BaseFragment;
 
 /**
@@ -12,7 +11,7 @@ public class FineFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResource() {
-        return 0;
+        return R.layout.fine_fragment_layout;
     }
 
     @Override
@@ -23,5 +22,10 @@ public class FineFragment extends BaseFragment {
     @Override
     protected void initView() {
 
+    }
+
+    public static FineFragment newInstance(){
+        FineFragment fineFragment = new FineFragment();
+        return fineFragment;
     }
 }

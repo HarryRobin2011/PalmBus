@@ -1,4 +1,4 @@
-package com.palm.palmbus.ui.fragment;
+package com.palm.palmbus.ui.main.fragment;
 
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,8 +14,7 @@ import butterknife.BindView;
  */
 
 public class TransferFragment extends BaseFragment {
-    @BindView(R.id.title_layout)
-    LinearLayout titleLayout;
+
     @BindView(R.id.change)
     ImageView change;
     @BindView(R.id.location_me)
@@ -29,23 +28,23 @@ public class TransferFragment extends BaseFragment {
     @BindView(R.id.location_from_layout)
     LinearLayout locationFromLayout;
 
-    @Override
-    protected int initResource() {
-        return R.layout.trans_fer_layout;
-    }
-
-    @Override
-    protected void initData() {
-    }
-
-    @Override
-    protected void initOperation() {
-
-    }
-
-    public static TransferFragment  newInstance() {
+    public static TransferFragment newInstance() {
         TransferFragment transferFragment = new TransferFragment();
         return transferFragment;
     }
 
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.trans_fer_layout;
+    }
+
+    @Override
+    public void initPresenter() {
+
+    }
+
+    @Override
+    protected void initView() {
+
+    }
 }

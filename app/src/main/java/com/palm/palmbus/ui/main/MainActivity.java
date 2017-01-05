@@ -1,4 +1,4 @@
-package com.palm.palmbus.ui;
+package com.palm.palmbus.ui.main;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -7,16 +7,17 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.FrameLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.palm.palmbus.R;
 import com.palm.palmbus.ui.base.BaseActivity;
 import com.palm.palmbus.ui.base.BaseFragment;
-import com.palm.palmbus.ui.fragment.FineFragment;
-import com.palm.palmbus.ui.fragment.HomePagerFragment;
-import com.palm.palmbus.ui.fragment.MeFragment;
-import com.palm.palmbus.ui.fragment.TransferFragment;
+import com.palm.palmbus.ui.main.fragment.FineFragment;
+import com.palm.palmbus.ui.main.fragment.HomePagerFragment;
+import com.palm.palmbus.ui.main.fragment.MeFragment;
+import com.palm.palmbus.ui.main.fragment.TransferFragment;
 
 import java.util.ArrayList;
 
@@ -25,10 +26,12 @@ import butterknife.BindView;
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
     @BindView(R.id.buttom_bar)
     BottomNavigationBar buttomBar;
+    @BindView(R.id.content)
+    FrameLayout content;
     private BaseFragment currentFragment;
 
-    private String[] titles = new String[]{"实时", "换乘","美食","我的"};
-    private int[] titleIcons = new int[]{R.mipmap.bus_tab1, R.mipmap.bus_tab2,R.mipmap.bus_tab3,R.mipmap.bus_tab4};
+    private String[] titles = new String[]{"实时", "换乘", "美食", "我的"};
+    private int[] titleIcons = new int[]{R.mipmap.bus_tab1, R.mipmap.bus_tab2, R.mipmap.bus_tab3, R.mipmap.bus_tab4};
 
     private String permissionInfo;
 
@@ -44,7 +47,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     @Override
-    protected void initData() {
+    protected void initView() {
         getPersimmions();
         buttomBar.setMode(BottomNavigationBar.MODE_FIXED);
         buttomBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
@@ -94,18 +97,19 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 break;
             case 2:
                 if (currentFragment == null) {
-                    currentFragment = MeFragment.newInstance();
+                    currentFragment = FineFragment.newInstance();
                 }
                 break;
             case 3:
-                if(currentFragment == null){
-                    currentFragment = FineFragment.newInstance();
+                if (currentFragment == null) {
+                    currentFragment = MeFragment.newInstance();
                 }
+                break;
         }
         if (currentFragment.isAdded()) {
-          fm.beginTransaction().show(currentFragment).commitAllowingStateLoss();
+            fm.beginTransaction().show(currentFragment).commitAllowingStateLoss();
         } else {
-           fm.beginTransaction().add(R.id.content,currentFragment, titles[position]).commitAllowingStateLoss();
+            fm.beginTransaction().add(R.id.content, currentFragment, titles[position]).commitAllowingStateLoss();
         }
     }
 
@@ -130,13 +134,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
              * 定位权限为必须权限，用户如果禁止，则每次进入都会申请
              */
             // 定位精确位置
-            if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
             }
-            if(checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
             }
-			/*
+            /*
 			 * 读写权限和电话状态权限非必要权限(建议授予)只会申请一次，用户同意或者禁止，只会弹一次
 			 */
             // 读写权限
@@ -157,14 +161,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @TargetApi(23)
     private boolean addPermission(ArrayList<String> permissionsList, String permission) {
         if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) { // 如果应用没有获得对应权限,则添加到列表中,准备批量申请
-            if (shouldShowRequestPermissionRationale(permission)){
+            if (shouldShowRequestPermissionRationale(permission)) {
                 return true;
-            }else{
+            } else {
                 permissionsList.add(permission);
                 return false;
             }
 
-        }else{
+        } else {
             return true;
         }
     }

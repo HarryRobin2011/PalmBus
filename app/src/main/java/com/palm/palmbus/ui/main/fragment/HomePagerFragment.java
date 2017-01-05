@@ -1,13 +1,11 @@
-package com.palm.palmbus.ui.fragment;
+package com.palm.palmbus.ui.main.fragment;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;

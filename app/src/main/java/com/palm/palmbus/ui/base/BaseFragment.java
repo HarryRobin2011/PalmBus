@@ -30,9 +30,9 @@ public abstract class BaseFragment<T extends BasePresenter,E extends BaseModel> 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null)
+        if (rootView == null){
             rootView = inflater.inflate(getLayoutResource(), container, false);
-
+        }
         this.mInflater = inflater;
 
         mRxManager=new RxManager();
