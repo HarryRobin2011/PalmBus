@@ -73,7 +73,7 @@ public class Api {
 
 
     //构造方法私有
-    private Api(int hostType) {
+    private Api(String baseUrl) {
         //开启Log
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -106,22 +106,22 @@ public class Api {
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(ApiConstants.getHost(hostType))
+                .baseUrl(ApiConstants.BASE_URL)
                 .build();
         movieService = retrofit.create(ApiService.class);
     }
 
 
     /**
-     * @param hostType NETEASE_NEWS_VIDEO：1 （新闻，视频），GANK_GIRL_PHOTO：2（图片新闻）;
-     *                 EWS_DETAIL_HTML_PHOTO:3新闻详情html图片)
+     * @param baseUrl
      */
-    public static ApiService getDefault(int hostType) {
-        Api retrofitManager = sRetrofitManager.get(hostType);
-        if (retrofitManager == null) {
-            retrofitManager = new Api(hostType);
-            sRetrofitManager.put(hostType, retrofitManager);
-        }
+    public static ApiService getDefault(String baseUrl) {
+//        Api retrofitManager = sRetrofitManager.get(hostType);
+//        if (retrofitManager == null) {
+//            retrofitManager = new Api(hostType);
+//            sRetrofitManager.put(hostType, retrofitManager);
+//        }
+        Api retrofitManager = new Api(baseUrl);
         return retrofitManager.movieService;
     }
 
